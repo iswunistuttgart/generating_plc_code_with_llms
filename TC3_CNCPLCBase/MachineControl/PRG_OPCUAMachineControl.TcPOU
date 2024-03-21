@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="PRG_OPCUAMachineControl" Id="{b1745437-5b87-45ce-8a5c-ecccc4d315a6}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_OPCUAMachineControl
+VAR
+	bError 				: BOOL;
+	ErrorType			: STRING;
+	previousError		: STRING;
+	bWarningMessage		: BOOL;
+END_VAR
+VAR_INPUT
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF GVL_FiveX.bEmergency THEN
+	GVL_FiveX.MachineStatus := ERROR;
+	GVL_FiveX.errorType := 'EMERGENCY';
+END_IF
+
+IF NOT GVL_FiveX.bPower THEN
+	Global_HMI.PLCAxisEnable := FALSE;
+END_IF
+IF GVL_FiveX.MachineStatus = INIT OR GVL_FiveX.MachineStatus = ERROR OR GVL_FiveX.MachineStatus = RESET THEN
+	//Global_HMI.PLCAxisEnable := FALSE;  //Comment out if TestMode to Enable Axis in Init
+END_IF
+
+
+IF NOT GVL_FiveX.bPower AND NOT (GVL_FiveX.MachineStatus = INIT OR GVL_FiveX.MachineStatus = ERROR OR GVL_FiveX.MachineStatus = ERROR) THEN
+	GVL_FiveX.MachineStatus := ERROR;
+END_IF
+
+IF GVL_FiveX.bError THEN
+	GVL_FiveX.MachineStatus := ERROR;
+END_IF
+
+
+
+// TODO Was muss gemacht werden, wenn im laufenden Betrieb Schlüsselschalter geändert wird?
+CASE GVL_FiveX.MachineStatus OF
+	INIT:
+		GVL_FiveX.bOPCUAMaCtrlReset := FALSE;
+		GVL_IO.machineStates[0].name := 'Machine';	
+		GVL_IO.machineStates[0].state := 'INIT';		
+		GVL_FiveX.st_LampColor := COLOR_YELLOW;
+		IF GVL_IO.bManualPreop AND GVL_FiveX.bPower THEN
+			GVL_FiveX.MachineStatus := PREOP;
+			GVL_FiveX.DoorStatus := MOVESTATE_PREOP;
+		END_IF
+		
+	PREOP:
+		GVL_IO.machineStates[0].state := 'PREOP';	
+		GVL_FiveX.st_LampColor := COLOR_GREEN;
+		IF GLOBAL_HMI.PLCAxisEnable THEN
+			IF GVL_FiveX.DoorStatus = MOVESTATE_ENABLE AND GVL_Axes.AllAxesEnabled THEN
+				GVL_FiveX.MachineStatus := READY;
+			END_IF
+		END_IF
+		
+	READY:
+		GVL_IO.bManualPreop := FALSE;
+		GVL_IO.machineStates[0].state := 'READY';	
+		GVL_FiveX.st_LampColor := COLOR_GREEN;
+		// ENABLE CNC
+		// ADAPT SPEED AND CO
+		
+
+		
+	OPERATION:
+		GVL_IO.machineStates[0].state := 'OPERATION';	
+		GVL_FiveX.st_LampColor := COLOR_BLUE;
+		
+		
+	FINISHED:
+		GVL_IO.machineStates[0].state := 'FINISHED';	
+		pBlink(Color1 := COLOR_OFF, Color2 := COLOR_GREEN);	
+		
+		
+	ERROR:
+		GVL_FiveX.bOPCUAMaCtrlResetAvailbalble := TRUE;
+		GVL_IO.machineStates[0].state := 'ERROR';	
+		GVL_FiveX.st_LampColor := COLOR_RED;
+		bError := TRUE;
+		ErrorType := GVL_FiveX.errorType; 
+		IF GVL_FiveX.bOPCUAMaCtrlReset THEN //Global_HMI.PLCReset  THEN
+			GVL_FiveX.MachineStatus := RESET;
+		//	bError := FALSE;				//Bestandteil in RESET
+		//	GVL_FiveX.bError := FALSE;
+		END_IF
+		
+	RESET:
+		GVL_FiveX.bOPCUAMaCtrlResetAvailbalble := FALSE;
+		GVL_IO.machineStates[0].state := 'RESET';	
+		pBlink(Color1 := COLOR_YELLOW, Color2 := COLOR_RED);
+		bError := FALSE;
+		GVL_FiveX.bError := FALSE;
+		previousError := GVL_FiveX.errorType;
+		GVL_FiveX.MachineStatus := INIT; 
+		GVL_FiveX.DoorStatus := MOVESTATE_INIT;
+
+END_CASE
+
+//TODO: Check/Test this error handling later
+IF GVL_FiveX.bError AND NOT Global_HMI.PLCReset AND NOT(GVL_FiveX.MachineStatus = RESET) THEN
+	GVL_FiveX.MachineStatus := ERROR;
+END_IF
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_OPCUAMachineControl">
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="24" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="42" Count="2" />
+      <LineId Id="48" Count="2" />
+      <LineId Id="68" Count="4" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="80" Count="2" />
+      <LineId Id="84" Count="6" />
+      <LineId Id="96" Count="14" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="111" Count="10" />
+      <LineId Id="229" Count="0" />
+      <LineId Id="122" Count="5" />
+      <LineId Id="230" Count="0" />
+      <LineId Id="128" Count="7" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,18 @@
+Give me an IEC 61131-3 structured text function FC1002 with the following functionality. An ultrasonic monitoring system detects all people and objects that approach the danger area in a three-dimensional protective field. If the ultrasonic sensor reports an approach, the horn P_HU emits an acoustic warning signal. If the perception of the person or object lasts longer than 3 seconds, the warning signal P_HU is switched off and an alarm P_AL is switched on. The monitoring system is switched on with the switch E_A and the switched on status is indicated with P1. To turn off the alarm, the monitoring system must be turned off using the E_A switch.
+Following rules should be followed:
+- variables should be declared between VAR and END_VAR
+- when using control structures do not forget END_<controll structure>
+- switch cases should be avoided unless instructed in the task
+- use the right quotation marks for the string type
+- implementing a function should be avoided
+- only when implementing a function: the variables should be declared inside the function; the return value should be stored in a variable named after the function; RETURN should be used correctly, to return to the main method and not to return a value
+Only following variables should be used:
+FUNCTION FC1002 :BOOL
+VAR_INPUT
+	E_A, SENSOR: BOOL;
+	ZEITW: TIME;
+END_VAR
+VAR_IN_OUT
+	ZEIT:TON;
+	P_HU, P_AL: BOOL;
+END_VAR

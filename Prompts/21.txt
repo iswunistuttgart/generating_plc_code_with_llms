@@ -1,0 +1,54 @@
+Give me an IEC 61131-3 structured text function block BURNER with following functionality. BURNER is a control interface for oil or gas burner operating at kilowatt hour meter and counter. The module controls a two-stage burner with optional fuel oil warming. The input IN is the control input that starts the burner only when the input OVER_TEMP is FALSE. OVER_TEMP is the boiler thermostat protection, which gets TRUE, if the boiler temperature has reached the maximum temperature. A burner start begins with the fuel oil warming, by PRE_HEAT gets TRUE. Then it waits for a signal at the input OIL_TEMP. If the signal OIL_TEMP is within the PRE_HEAT_TIME not TRUE and the oil temperature is not reached, the start sequence is interrupted and the output FAIL is set to TRUE. At the same time the error is spent at the Output STATUS. After fuel oil warming the motor gets on and sets the fan in operation. Then after a defned time the ignition is switched and the oil valve is opened. If no response of the fame sensor after specifed time (SAFETY_TIME), the module shows a failure. A fault is signaled even if the fame sensor responds before the ignition. If after a successful ignition, the fame breaks of and the set-variable MULTIPLE_IGNITION = TRUE, immediately a ignition is started. A second stage is activated automatically after the time STAGE2_DELAY when the input STAGE2 is TRUE. If a fault occurs, then the module is locked for a fxed time LOCKOUT_TIME and only after this time a RST can start the operation again. During the LOCKOUT_TIME, the RST Input must be FALSE. A TRUE at input OVER_TEMP stops immediately every action and reports the error 9. The status output indicates the current state of the module: 110 = Wait for Start signal ( Standby ); 111 = startup sequence is executed; 112 = burner runs on stage 1; 113 = burner runs at stage 2. A number of error conditions are provided at the output STATUS, if an error is present:1 = fuel oil warming has not responded within the PRE_HEAT_TIME; 2 = fame sensor is active during fuel oil warming (PRE_HEAT_TIME); 3 = fame sensor is active during the aeration period (PRE_VENTILATION_TIME); 4 = safety time ( Safety_Time) was passed without a fame; 5 = fame stops in operation; 9 = boiler overheating contact has tripped. Trace recording of a normal boot sequence: The signal IN starts the sequence with the output PRE_HEAT. After reaching the oil temperature (OIL_TEMP = TRUE), the engine started and the PRE_VENTILATION_TIME (time from engine start until oil valve is open) awaited. After an adjustable time (PPR_IGNITION_TIME) before opening the oil valve, the ignition is turned on. The ignition is then on until the POST_IGNITION_TIME has expired. The operating time per stage is measured independently in seconds.
+Following rules should be followed:
+- variables should be declared between VAR and END_VAR
+- when using control structures do not forget END_<controll structure>
+- switch cases should be avoided unless instructed in the task
+- use the right quotation marks for the string type
+- implementing a function should be avoided
+- only when implementing a function: the variables should be declared inside the function; the return value should be stored in a variable named after the function; RETURN should be used correctly, to return to the main method and not to return a value
+Only following variables should be used:
+FUNCTION_BLOCK BURNER
+VAR_INPUT
+    IN : BOOL;
+    STAGE2 : BOOL;
+    OVER_TEMP : BOOL;
+    OIL_TEMP : BOOL := TRUE;
+    FLAME : BOOL;
+    RST : BOOL;
+    RST_TIMER : BOOL;
+    PRE_HEAT_TIME : TIME := t#5s;
+    PRE_VENT_TIME : TIME := t#15s;
+    PRE_IGNITE_TIME : TIME := t#15s;
+    POST_IGNITE_TIME : TIME := t#25s;
+    STAGE2_DELAY : TIME := t#10s;
+    SAFETY_TIME : TIME := t#5s;
+    LOCKOUT_TIME : TIME := t#10s;
+    MULTIPLE_IGNITION : BOOL := TRUE;
+    KW1 : REAL;
+    KW2 : REAL;
+END_VAR
+VAR_OUTPUT
+    MOTOR : BOOL;
+    COIL1 : BOOL;
+    COIL2 : BOOL;
+    PRE_HEAT : BOOL;
+    IGNITE : BOOL;
+    FAIL : BOOL;
+    KWH : REAL;
+    STATUS : BYTE;
+END_VAR
+VAR_IN_OUT
+    RUNTIME1 : UDINT;
+    RUNTIME2 : UDINT;
+    CYCLES : UDINT;
+END_VAR
+VAR
+    state : INT;
+    last : TIME;
+    tx : TIME;
+    last_change : TIME;
+    timer1 : TON;
+    timer2 : TON;
+    oil_temp_last : BOOL;
+    cycles2 : UDINT;
+END_VAR

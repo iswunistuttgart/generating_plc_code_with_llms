@@ -1,0 +1,11 @@
+// 32.119813442230225s
+// 2
+PROGRAM sigmoid
+VAR_INPUT
+    X : REAL;
+END_VAR
+IF (X > 0.5) THEN
+    RETURN(1);
+ELSE
+    RETURN(0);
+ENDIF

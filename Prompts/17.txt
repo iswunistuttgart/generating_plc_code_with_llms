@@ -1,0 +1,14 @@
+Give me an IEC 61131-3 structured text program of a weather station. A temperature sensor measures the outside temperature. The temperature is read in via an analog input and should be displayed in text form in the house. 1) If the temperature is below 18°C, "Cold" should be displayed. 2) If the temperature is between 18°C and 25°, "Opt" (optimum) should be displayed. 3) If the temperature is above 25°C, "Hot" should be displayed. Solve this application by using IF, ELSIF and ELSE instructions. Evaluate the humidity as well as the temperature. The text "Opt" should only appear if the humidity is between 40 and 75% and the temperature is between 18 and 25°C, otherwise "Temp. OK" should be displayed. Solve the task with a nested IF statement.
+Following rules should be followed:
+- variables should be declared between VAR and END_VAR
+- when using control structures do not forget END_<controll structure>
+- switch cases should be avoided unless instructed in the task
+- use the right quotation marks for the string type
+- implementing a function should be avoided
+- only when implementing a function: the variables should be declared inside the function; the return value should be stored in a variable named after the function; RETURN should be used correctly, to return to the main method and not to return a value
+Only following variables should be used:
+VAR
+    aiOutside : INT;
+    aiHumidity: INT;
+    sShowText : STRING[80];
+END_VAR

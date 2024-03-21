@@ -1,0 +1,21 @@
+Give me an IEC 61131-3 structured text function block FB1005 with following functionality. When producing ceramic insulation panels, it must be checked after firing whether the thickness of the panel is within a specified tolerance band. To do this, the plates are pushed through a measuring point consisting of two lasers at a uniform speed. The thickness of the plates is determined from the difference between the measurements of the two lasers. For each measurement, the smallest and largest value of the plate thickness is recorded. If these are outside the tolerance band, the plate is considered scrap. A function block FB 1005 must be designed that checks the plate thickness, which results from the difference between the two laser measurements. During and after the measurement, the function block should output the largest (M_MAX) or smallest value (M_MIN) of the plate thickness. If the two values are outside the range specified with V_MAX and V_MIN, the reject light P1 is switched on. The measurement is started and ended with the sensor S1, which delivers a 1 signal as long as the ceramic plate is in the measuring device. At the start of a new measurement, the output values of the function block are overwritten with the values of the new measuring cycle. To test the function block FB 1005, sensor S1 is connected to the START input. A flag double word MD_1 is assigned to the THICKNESS function input. Any REAL numbers can be written to V-MAX and V_MIN. Flag double words are written to the output values D_MAX and D_MIN.
+Following rules should be followed:
+- variables should be declared between VAR and END_VAR
+- when using control structures do not forget END_<controll structure>
+- switch cases should be avoided unless instructed in the task
+- use the right quotation marks for the string type
+- implementing a function should be avoided
+- only when implementing a function: the variables should be declared inside the function; the return value should be stored in a variable named after the function; RETURN should be used correctly, to return to the main method and not to return a value
+Only following variables should be used:
+FUNCTION_BLOCK FB1005
+VAR_INPUT
+    START:BOOL; 
+    DICKE, V_MAX, V_MIN:REAL;
+END_VAR
+VAR_OUTPUT
+    D_MAX, D_MIN:REAL; 
+    P1:BOOL;
+END_VAR
+VAR
+    FO:BOOL;
+END_VAR

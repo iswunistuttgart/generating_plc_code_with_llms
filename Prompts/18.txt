@@ -1,0 +1,22 @@
+Give me an IEC 61131-3 structured text function FC1003 with the following functionality. A temperature sensor supplies values from 0 to 255 to a PLC digital input. These values correspond to a temperature of -20C to 40C, for example. Temperature values are to be used in the controller. For this purpose, a function FC 1003 is to be designed which converts the digital input floating point numbers from 0 to 255 into the temperature range from -20C to 40C. So that the range mapping can be used for any numerical range, the original range is to be defined by selectable lower limit (IN_MIN) and upper limit (IN_MAX) and the output range is also to be determined by specifying the lower limit (OUT_MIN) and upper limit (OUT_MAX).
+Following rules should be followed:
+- variables should be declared between VAR and END_VAR
+- when using control structures do not forget END_<controll structure>
+- switch cases should be avoided unless instructed in the task
+- use the right quotation marks for the string type
+- implementing a function should be avoided
+- only when implementing a function: the variables should be declared inside the function; the return value should be stored in a variable named after the function; RETURN should be used correctly, to return to the main method and not to return a value
+Only following variables should be used:
+FUNCTION FC1003 : VOID
+VAR_INPUT
+    IN_R:REAL;
+    IN_MAX, IN_MIN:REAL;
+    OUT_MAX, OUT_MIN:REAL;
+END_VAR
+VAR_OUTPUT
+    OUT_R:REAL;
+    FEH:BOOL;
+END_VAR
+VAR_TEMP
+    DIFF1, DIFF2:REAL;
+END_VAR

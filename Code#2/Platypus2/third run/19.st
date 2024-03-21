@@ -1,0 +1,39 @@
+// 151.82228446006775s
+// 2
+FUNCTION_BLOCK FB1005
+VAR_INPUT
+    START:BOOL; 
+    DICKE, V_MAX, V_MIN:REAL;
+END_VAR
+VAR_OUTPUT
+    D_MAX, D_MIN:REAL; 
+    P1:BOOL;
+END_VAR
+VAR
+    FO:BOOL;
+END_VAR
+IF START THEN
+    DICKE := 0.0;
+    V_MAX := 0.0;
+    V_MIN := 0.0;
+    D_MAX := 0.0;
+    D_MIN := 0.0;
+    P1 := FALSE;
+ELSE
+    DICKE := 0.0;
+    V_MAX := 0.0;
+    V_MIN := 0.0;
+    D_MAX := 0.0;
+    D_MIN := 0.0;
+    P1 := FALSE;
+ENDIF
+IF START THEN
+    IF (DICKE > V_MAX) OR (DICKE < V_MIN) THEN
+        P1 := TRUE;
+    ELSE
+        P1 := FALSE;
+    END_IF
+ELSE
+    P1 := FALSE;
+ENDIF
+END_FUNCTION_BLOCK

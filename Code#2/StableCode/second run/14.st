@@ -1,0 +1,27 @@
+// 26.230083227157593s
+// 2
+function FC1001(IN input) : BOOL
+	FUNCTION FC1001 : BOOL
+		LOCAL VAR_INPUT
+			MEW: REAL;
+			SP: REAL;
+			HYS: REAL;
+		END_LOCAL
+
+		LOCAL P_HYS: REAL;
+
+		IF input.SP > HYS THEN
+			RETURN FALSE;
+		END IF
+
+		P_HYS = (input.SP - input.MEW) / input.HYS * 100;
+
+		IF P_HYS > input.P_HYS THEN
+			OUT := TRUE;
+		ELSE
+			OUT := FALSE;
+		END IF
+
+		RETURN OUT;
+	END FUNCTION FC1001 : BOOL
+END FUNCTION FC1001 : BOOL

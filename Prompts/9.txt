@@ -1,0 +1,12 @@
+Give me an IEC 61131-3 structured text program that checks whether the int YEAR is a leap year or not.
+Following rules should be followed:
+- variables should be declared between VAR and END_VAR
+- when using control structures do not forget END_<controll structure>
+- switch cases should be avoided unless instructed in the task
+- use the right quotation marks for the string type
+- implementing a function should be avoided
+- only when implementing a function: the variables should be declared inside the function; the return value should be stored in a variable named after the function; RETURN should be used correctly, to return to the main method and not to return a value
+Only following variables should be used:
+VAR 
+    YEAR : INT
+END_VAR

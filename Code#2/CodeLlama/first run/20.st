@@ -1,0 +1,62 @@
+// 80.8629081249237s
+// 2
+```
+FUNCTION_BLOCK INTERLOCK
+VAR_INPUT
+    I1 : BOOL;
+    I2 : BOOL;
+    TL : TIME;
+END_VAR
+VAR_OUTPUT
+    Q1 : BOOL;
+    Q2 : BOOL;
+END_VAR
+VAR
+    T1 : TOF;
+    T2 : TOF;
+END_VAR
+
+PROGRAM INTERLOCK_PB
+VAR
+    I1 : BOOL := FALSE;
+    I2 : BOOL := FALSE;
+    TL : TIME := T#50ms;
+    Q1 : BOOL := FALSE;
+    Q2 : BOOL := FALSE;
+END_VAR
+
+IF (I1) THEN
+    IF (NOT(Q1)) THEN
+        Q1 := TRUE;
+    END_IF;
+ELSIF (I2) THEN
+    IF (NOT(Q2)) THEN
+        Q2 := TRUE;
+    END_IF;
+END_IF;
+
+IF (Q1) THEN
+    T1.TON;
+END_IF;
+
+IF (Q2) THEN
+    T2.TON;
+END_IF;
+
+IF ((T1.TOF AND NOT(I1)) OR (T2.TOF AND NOT(I2))) THEN
+    Q1 := FALSE;
+    Q2 := FALSE;
+END_IF;
+
+IF (Q1) THEN
+    IF (T2.TOF) THEN
+        Q1 := FALSE;
+    END_IF;
+ELSIF (Q2) THEN
+    IF (T1.TOF) THEN
+        Q2 := FALSE;
+    END_IF;
+END_IF;
+
+END_PROGRAM;
+```

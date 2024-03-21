@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <GVL Name="GVL_OPCUA" Id="{b2cbd6c8-8d6a-4514-9338-2cbf84c6eb1d}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.Access' := '1'}
+	bWorkpieceClamp 			: BOOL;	//True -> Open, False -> Closed
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.Access' := '3'}
+	bSpindleClamp 				: BOOL;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.Access' := '1'}
+	axisPosition 				: ARRAY[0..4] OF ST_AxisPosition;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.Access' := '1'}
+	spindleSpeed 				: DINT;
+	{attribute 'OPC.UA.DA' := '1'}
+	{attribute 'OPC.UA.DA.Access' := '1'}
+	doorPosition				: LREAL;
+	{attribute 'OPC.UA.DA' := '1'}
+	bOPCUAWriteVariable : BOOL;
+ 
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

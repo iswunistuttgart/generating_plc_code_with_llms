@@ -1,0 +1,6 @@
+openai
+stopit
+numpy
+pandas
+ctransformers
+code_bert_score

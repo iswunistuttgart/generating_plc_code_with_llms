@@ -1,0 +1,27 @@
+// 7.1s
+// 2
+FUNCTION FC1001 : BOOL
+VAR_INPUT
+    MEW : REAL;
+    SP : REAL;
+    HYS : REAL;
+END_VAR
+VAR_IN_OUT
+    OUT : BOOL;
+END_VAR
+VAR
+    P_HYS : REAL;
+END_VAR
+
+START
+
+    P_HYS := HYS * SP;
+
+    IF MEW > SP + P_HYS THEN
+        OUT := TRUE;
+    ELSIF MEW < SP - P_HYS THEN
+        OUT := FALSE;
+    END_IF;
+
+    RETURN OUT;
+END_FUNCTION

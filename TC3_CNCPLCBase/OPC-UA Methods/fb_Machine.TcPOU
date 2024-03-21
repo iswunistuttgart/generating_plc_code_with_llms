@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="fb_Machine" Id="{2e10d366-e602-4d6c-acca-22a1e3140038}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK fb_Machine
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="driveIn" Id="{dd7984d9-f792-414b-ae64-d1402733b679}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' :='1'}
+METHOD driveIn : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	disabled : BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(GVL_FiveX.MachineStatus = OPERATION) THEN 
+	GVL_FiveX.bDriveOut := FALSE;
+ELSE
+	disabled := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="driveOut" Id="{a740f0a1-7c54-4cc4-b255-15b4fdfc55b4}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' :='1'}
+METHOD driveOut : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	disabled : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(GVL_FiveX.MachineStatus = OPERATION) THEN 
+	GVL_FiveX.bDriveOut := TRUE;
+ELSE
+	disabled := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="reset" Id="{d9fcbe67-8166-42a9-a1d9-0373d023d6bb}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' :='1'}
+METHOD reset : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	resetWasAvailable 	: BOOL;
+	disabled			: BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[resetWasAvailable := GVL_FiveX.bOPCUAMaCtrlResetAvailbalble;
+IF NOT(GVL_FiveX.MachineStatus = OPERATION) THEN 
+	GVL_FiveX.bOPCUAMaCtrlReset := TRUE;
+ELSE
+	disabled := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="togglePreop" Id="{71648560-2323-46ff-9f4a-804e12e14862}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' :='1'}
+METHOD togglePreop : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	disabled : BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(GVL_FiveX.MachineStatus = OPERATION) THEN 
+	GVL_IO.bManualPreop := TRUE;
+ELSE
+	disabled := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="fb_Machine">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="fb_Machine.driveIn">
+      <LineId Id="19" Count="4" />
+    </LineIds>
+    <LineIds Name="fb_Machine.driveOut">
+      <LineId Id="20" Count="4" />
+    </LineIds>
+    <LineIds Name="fb_Machine.reset">
+      <LineId Id="28" Count="0" />
+      <LineId Id="13" Count="4" />
+    </LineIds>
+    <LineIds Name="fb_Machine.togglePreop">
+      <LineId Id="14" Count="4" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

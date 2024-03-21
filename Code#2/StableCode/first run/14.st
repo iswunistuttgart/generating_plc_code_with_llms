@@ -1,0 +1,19 @@
+// 27.15153980255127s
+// 2
+function FC1001(IN input) : BOOL
+	FUNCTION FC1001 : BOOL
+		VAR_INPUT
+			MEW:=input.MEW;
+			SP:=input.SP;
+			HYS:=input.HYS;
+		END_VAR_INPUT
+		P_HYS:=input.HYS*0.95;
+		IF (input.SP > MEW) THEN
+			OUT:=TRUE;
+		ELSE IF (input.SP < SP) AND (input.MEW > P_HYS) THEN
+			OUT:=FALSE;
+		ELSE
+			RETURN FALSE;
+		END IF
+	END FUNCTION FC1001 : BOOL
+END FUNCTION FC1001 : BOOL

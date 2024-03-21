@@ -1,0 +1,105 @@
+Result: Give me an IEC 61131-3 structured text program with two alarms represented by the variables xAlarm1 and xAlarm2. With the signal xAllOn all alarms should be set to TRUE. With the signal xAllOff all alarms should be set to FALSE. The signals should be turned off.
+76629.97879242897 s
+I have written a program that does not work.
+
+\begin{code}
+IF xAlarm1 = TRUE THEN IF  xAlarm2 = TRUE THEN
+xAlarm1 = TRUE;
+xAlarm2 = TRUE;
+
+ELSIF xAllOff = TRUE THEN
+xAlarm1= FALSE;
+xAlarm2= FALSE;
+
+ELSE
+
+xAlarm1= FALSE;
+xAlarm2= FALSE;
+
+ENDIF
+\end{code}
+
+I would like to have your assistance to make this structured text program functional.
+
+Answer: You should be using "CASE" instead of "IF".
+
+\begin{code}
+CASE xAlarm
+  OF xAllOn   :
+      xAlarm1 = TRUE;
+      xAlarm2 = TRUE;
+  OF xAllOff  :
+      xAlarm1 = FALSE;
+      xAlarm2 = FALSE;
+  OF xAlarm1  :
+      xAlarm1 = TRUE;
+      xAlarm2 = FALSE;
+  OF xAlarm2  :
+      xAlarm1 = FALSE;
+      xAlarm2 = TRUE;
+  OF xAllOff  :
+      xAlarm1 = FALSE;
+      xAlarm2 = FALSE;
+  ELSE
+      xAlarm1 = FALSE;
+      xAlarm2 = FALSE;
+    END_CASE
+\end{code}
+
+You may also want to consider using the following construct:
+
+\begin{code}
+IF (xAlarm = xAllOn) OR (xAlarm = xAlarm1) THEN
+xAlarm1 = TRUE;
+ELSIF (xAlarm = xAlarm2) THEN
+  xAlarm2 = TRUE;
+
+ELSE
+
+  xAlarm1= FALSE;
+  xAlarm2= FALSE;
+
+ENDIF
+\end{code}
+
+I hope this helps.
+
+Comment: You could use `OF xAllOn THEN` rather than a `CASE`.
+
+Answer: I would write a program like this:
+
+\begin{code}
+PROGRAM PGMNAME
+    CASE xAlarm
+    OF xAlarm1
+        xAlarm1 = TRUE;
+        xAlarm2 = FALSE;
+    OF xAlarm2
+        xAlarm1 = FALSE;
+        xAlarm2 = TRUE;
+    OF xAllOff
+        xAlarm1 = FALSE;
+        xAlarm2 = FALSE;
+    ELSE
+        xAlarm1 = FALSE;
+        xAlarm2 = FALSE;
+    END_CASE
+END_PROGRAM
+\end{code}
+
+If you really want to have all the variables set to TRUE in all other cases (except for xAllOff), then you can just remove that "ELSE" block and all the statements inside of it, and the program will set all the alarms to TRUE if none of the other signals are TRUE.
+
+Comment: This program does not work. It is only setting the value TRUE to the variable xAllOff.
+
+Comment: I just realized that there was a mistake in my code. I'll edit the post above.
+
+Comment: This program also does not work. It is setting the value of the variable xAllOn to TRUE.
+
+Comment: I apologize, but I have never used a structured text program before. I'm not sure why it is not working.
+
+Comment: No, it does not. I am trying to have the program work.
+
+Comment: I apologize. I have found the solution.
+
+Comment: You should answer your question and mark it as the solution to your question.
+76629.97879242897 s

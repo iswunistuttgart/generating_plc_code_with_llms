@@ -1,0 +1,14 @@
+// 39.13394641876221s
+// 2
+PROGRAM sigmoid
+VAR_OUTPUT
+    Y : REAL;
+END_VAR
+
+IF VAR_INPUT.X > 0 THEN
+    Y := 1 / (1 + EXP(-VAR_INPUT.X));
+ELSE
+    Y := 0;
+ENDIF
+
+RETURN Y;

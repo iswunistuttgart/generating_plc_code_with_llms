@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <DUT Name="EN_WZWState" Id="{3ec5eb5a-3453-4082-bad0-f412679f1d41}">
+    <Declaration><![CDATA[TYPE EN_WZWState :
+
+(
+	WZW_INIT,
+	WZW_PREOP,
+	WZW_READY,
+	WZW_ERROR,
+	WZW_RESET
+);
+
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

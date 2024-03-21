@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="MAIN_SLOW" Id="{ca51f025-054e-4292-8961-774cf0a4324d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN_SLOW
+VAR	
+	enable : BOOL;
+	drive	: (wzIn, wzOut) := wzOut;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF CNCSystem.bHLIInit THEN
+	PRG_OPCUAMachineControl();
+	PRG_HMIGenerator();
+	PRG_FrontDoor();
+	PRG_OPCUA();
+
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN_SLOW">
+      <LineId Id="14" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

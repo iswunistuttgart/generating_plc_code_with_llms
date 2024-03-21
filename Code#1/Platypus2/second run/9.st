@@ -1,0 +1,6 @@
+// 21.361786365509033s
+// 2
+IF (YEAR MOD 4 = 0) AND (YEAR MOD 100 <> 0) OR (YEAR MOD 400 = 0) THEN
+    PRINT "Leap Year"
+ELSE
+    PRINT "Not a Leap Year"

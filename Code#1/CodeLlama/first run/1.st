@@ -1,0 +1,19 @@
+// 24.1444730758667s
+// 3 (xAllon noch ausmachen)
+```
+PROGRAM AlarmExample
+VAR
+    xAlarm1 : BOOL;
+    xAlarm2 : BOOL;
+    xAllOn  : BOOL;
+    xAllOff : BOOL;
+END_VAR
+
+IF (xAllOn) THEN
+    xAlarm1 := TRUE;
+    xAlarm2 := TRUE;
+ELSIF (xAllOff) THEN
+    xAlarm1 := FALSE;
+    xAlarm2 := FALSE;
+END_IF
+```

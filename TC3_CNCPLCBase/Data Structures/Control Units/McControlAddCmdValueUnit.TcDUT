@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <DUT Name="McControlAddCmdValueUnit" Id="{b5531cf3-84a1-460d-8efa-327ee553930a}">
+    <Declaration><![CDATA[TYPE McControlAddCmdValueUnit EXTENDS MC_CONTROL_ADD_CMD_VALUE_UNIT :
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

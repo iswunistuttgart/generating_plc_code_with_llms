@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="pBlink" Id="{70790406-82d9-4f84-8fb7-618c320fdd7f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM pBlink
+VAR
+	intState : INT;
+	fbTon : TON;
+	bTimer : BOOL;
+END_VAR
+VAR_INPUT
+	Color1 : EN_COLOR := COLOR_OFF;
+	Color2 : EN_COLOR := COLOR_OFF;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbTon(IN := bTimer, PT := GVL_FiveX.tBlinkingSpeed);
+CASE intState OF
+	0: 
+	GVL_FiveX.st_LampColor := Color1;
+	bTimer := TRUE;
+	intState := 1;
+	
+	1:
+	IF fbTon.Q THEN
+		bTimer := FALSE;
+		intState := 2;
+	END_IF
+	
+	2:
+	GVL_FiveX.st_LampColor := Color2;
+	bTimer := TRUE;
+	intState := 3;
+	
+	3:
+	IF fbTon.Q THEN
+		bTimer := FALSE;
+		intState := 0;
+	END_IF
+END_CASE
+]]></ST>
+    </Implementation>
+    <LineIds Name="pBlink">
+      <LineId Id="16" Count="23" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="fb_Pneumatics" Id="{47634c61-31a1-4110-af73-4492bb949d1f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK fb_Pneumatics
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="PneumaticOff" Id="{57755723-bc93-4252-ae86-f3ff7f052d96}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' :='1'}
+METHOD PneumaticOff : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	disabled : BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(GVL_FiveX.MachineStatus = OPERATION) THEN 
+	GVL_FiveX.bPneumaticOn := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="PneumaticOn" Id="{90091e9d-9970-4e22-81f3-6626f9d8d13b}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' :='1'}
+METHOD PneumaticOn : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	disabled : BOOL := FALSE;
+	//done : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(GVL_FiveX.MachineStatus = OPERATION) THEN 
+	GVL_FiveX.bPneumaticOn := TRUE;
+(*		IF (GVL_FiveX.desiredPressure - GVL_FiveX.currentPressure) >1.5 THEN
+		done := TRUE;
+	END_IF *)
+ELSE
+	disabled := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WorkpieceClose" Id="{e9bb6e46-3044-4d29-9dfe-b22907dba92d}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' :='1'}
+METHOD WorkpieceClose : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	disabled : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(GVL_FiveX.MachineStatus = OPERATION) THEN 
+	GVL_FiveX.bClampWorkpiece := TRUE;
+ELSE
+	disabled := TRUE;
+END_IF	]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WorkpieceOpen" Id="{a0fac8ff-a008-44b0-9990-44b1af9bc2f3}">
+      <Declaration><![CDATA[{attribute 'TcRpcEnable' :='1'}
+METHOD WorkpieceOpen : BOOL
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	disabled : BOOL := FALSE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(GVL_FiveX.MachineStatus = OPERATION) THEN 
+	GVL_FiveX.bClampWorkpiece := FALSE;
+ELSE
+	disabled := TRUE;
+END_IF	]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="fb_Pneumatics">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="fb_Pneumatics.PneumaticOff">
+      <LineId Id="16" Count="2" />
+    </LineIds>
+    <LineIds Name="fb_Pneumatics.PneumaticOn">
+      <LineId Id="22" Count="7" />
+    </LineIds>
+    <LineIds Name="fb_Pneumatics.WorkpieceClose">
+      <LineId Id="44" Count="1" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="42" Count="0" />
+    </LineIds>
+    <LineIds Name="fb_Pneumatics.WorkpieceOpen">
+      <LineId Id="42" Count="1" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="40" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

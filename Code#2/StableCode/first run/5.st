@@ -1,0 +1,13 @@
+// 61.22370886802673s
+// 1
+Declare a variable for the start loop state. This will be used to keep track of when the timer should timeout and when it should open the gate. The variable should be declared before the control structure and should have a default value of FALSE.
+Declare a variable for the one hour time out counter. This is used to keep track of when the timer should timeout and when it should open the gate. The variable should be declared before the control structure and should have a default value of T#1h.
+Declare a variable for the One Hour Timer object. This will be used to keep track of when the timer should timeout and when it should open the gate. The variable should be declared before the control structure and should have a default value of TON.
+Declare a boolean variable for the Gate Open state. This will be used to keep track of when the timer should timeout and when it should open the gate. The variable should be declared before the control structure and should have a default value of FALSE.
+Declare a boolean variable for the Close Gate Instruction flag. This will be used to indicate that the close gate instruction has been executed and should not be repeated. The variable should be declared before the control structure and should have a default value of FALSE.
+Declare a boolean variable for the Sensed Car state. This will be used to keep track of when the timer should timeout and when it should open the gate. The variable should be declared before the control structure and should have a default value of FALSE.
+Declare a boolean variable for the Sensed Car Instruction flag. This will be used to indicate that the sensed car instruction has been executed and should not be repeated. The variable should be declared before the control structure and should have a default value of FALSE.
+Declare a boolean variable for the Sensed App state. This will be used to keep track of when the timer should timeout and when it should open the gate. The variable should be declared before the control structure and should have a default value of FALSE.
+Declare a boolean variable for the Mobile Instruction flag. This will be used to indicate that the mobile instruction has been executed and should not be repeated. The variable should be declared before the control structure and should have a default value of FALSE.
+Declare a string variable for the Auth state. This will be used to keep track of when the timer should timeout and when it should open the gate. The variable should be declared before the control structure and should have a default value of 'abcd'.
+Declare a string variable for the My

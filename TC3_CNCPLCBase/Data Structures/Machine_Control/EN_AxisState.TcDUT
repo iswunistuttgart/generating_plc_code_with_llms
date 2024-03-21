@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <DUT Name="EN_AxisState" Id="{8ee2d425-8fc5-4786-ae60-3febc955d27c}">
+    <Declaration><![CDATA[{attribute 'to_string'}
+TYPE EN_AxisState :
+(
+	AX_NO_VOLTAGE,
+	AX_VOLTAGE,
+	AX_ENABLED,
+	AX_ERROR
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

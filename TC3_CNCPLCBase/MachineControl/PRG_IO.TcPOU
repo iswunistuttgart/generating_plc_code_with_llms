@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="PRG_IO" Id="{7ca27d27-464b-4c35-84d9-7906dda1c7b8}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_IO
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* A1 EK1100 *)
+		(* A1.1 EL1008 dig. Input *)
+		GVL_FiveX.bWzwDoorOpen 			:= GVL_IO.A1_1_1;
+		GVL_FiveX.bWzwDoorClosed 		:= GVL_IO.A1_1_2;
+		GVL_FiveX.bWzwUp	 			:= GVL_IO.A1_1_3;
+		GVL_FiveX.bWzwDown 				:= GVL_IO.A1_1_4;
+		GVL_FiveX.bReference 			:= GVL_IO.A1_1_5;
+		GVL_FiveX.bWzAvailable 			:= GVL_IO.A1_1_6;
+		IF GVL_IO.A1_1_7 AND GVL_IO.A1_1_8 THEN
+			GVL_FiveX.bSpindleStandStill := TRUE;
+		ELSE
+			GVL_FiveX.bSpindleStandStill := FALSE;
+		END_IF
+		
+		(* A1.2 EL1008 dig. Input *)
+		//GVL_FiveX.bSpindleStandStill 	:= GVL_IO.A1_2_1;
+		//GVL_FiveX.bSpindleButton 		:= TRUE; 	//war := GVL_IO.A1_2_2;
+		//GVL_FiveX.bKeyMode				:= GVL_IO.A1_2_3;
+		//GVL_FiveX.bEmergency			:= GVL_IO.A1_2_4;
+		//GVL_FiveX.bKeyMode				:= GVL_IO.A1_2_1;
+		GVL_FiveX.bFrontDoorClosed		:= NOT(GVL_IO.A1_2_2);
+		GVL_FiveX.bSpindleButton		:= GVL_IO.A1_2_3;
+		GVL_FiveX.bSpindleClampOpen		:= GVL_IO.A1_2_4;
+		GVL_FiveX.bRefSchalterX			:= GVL_IO.A1_2_5;
+		GVL_FiveX.bRefSchalterY			:= GVL_IO.A1_2_6;
+		GVL_FiveX.bRefSchalterZ			:= GVL_IO.A1_2_7;
+		GVL_FiveX.bSpindleWzAvailable 	:= GVL_IO.A1_2_8;
+
+		
+		(* A1.25 EL1104 dig. Input *)
+		GVL_FiveX.bPower				:=		GVL_IO.A1_25_1;
+		GVL_FiveX.bEmergency			:= GVL_IO.A1_25_2;
+		GVL_FiveX.bFrontDoorOpened		:=		NOT(GVL_IO.A1_25_3);	
+		GVL_FiveX.bFrontDoorReference	:=		NOT(GVL_IO.A1_25_4);
+		
+		
+		
+		(* A1.3 EL2008 dig. Output *)
+		GVL_IO.A1_3_1				:=		GVL_FiveX.bWzwDoorOutput;
+		GVL_IO.A1_3_2				:=		GVL_FiveX.bWzwOutput;
+		GVL_IO.A1_3_3				:=		GVL_FiveX.bDirOut;
+		GVL_IO.A1_3_4				:=		GVL_FiveX.bPWMOut;
+		CASE GVL_FiveX.st_LampColor OF
+			COLOR_RED:
+			GVL_FiveX.bLampRed := TRUE;
+			GVL_FiveX.bLampGreen := FALSE;
+			GVL_FiveX.bLampBlue := FALSE;
+			
+			COLOR_GREEN:
+			GVL_FiveX.bLampRed := FALSE;
+			GVL_FiveX.bLampGreen := TRUE;
+			GVL_FiveX.bLampBlue := FALSE;
+			
+			COLOR_BLUE:
+			GVL_FiveX.bLampRed := FALSE;
+			GVL_FiveX.bLampGreen := FALSE;
+			GVL_FiveX.bLampBlue := TRUE;
+			
+			COLOR_WHITE:
+			GVL_FiveX.bLampRed := TRUE;
+			GVL_FiveX.bLampGreen := TRUE;
+			GVL_FiveX.bLampBlue := TRUE;
+			
+			COLOR_OFF:
+			GVL_FiveX.bLampRed := FALSE;
+			GVL_FiveX.bLampGreen := FALSE;
+			GVL_FiveX.bLampBlue := FALSE;
+			
+			COLOR_YELLOW:
+			GVL_FiveX.bLampRed := TRUE;
+			GVL_FiveX.bLampGreen := TRUE;
+			GVL_FiveX.bLampBlue := FALSE;
+			
+			COLOR_PURPLE:
+			GVL_FiveX.bLampRed := TRUE;
+			GVL_FiveX.bLampGreen := FALSE;
+			GVL_FiveX.bLampBlue := TRUE;
+			
+			COLOR_CYAN:
+			GVL_FiveX.bLampRed := FALSE;
+			GVL_FiveX.bLampGreen := TRUE;
+			GVL_FiveX.bLampBlue := TRUE;
+			
+		END_CASE
+		GVL_IO.A1_3_5 := GVL_FiveX.bLampRed;
+		GVL_IO.A1_3_6 := GVL_FiveX.bLampGreen;
+		GVL_IO.A1_3_7 := GVL_FiveX.bLampBlue;
+		GVL_IO.A1_3_8 := GVL_FiveX.bLampSignal;
+		
+		(* A1.4 EL2008 dig. Output *)
+		GVL_IO.A1_4_1 := GVL_FiveX.bPneumaticOn;
+		GVL_IO.A1_4_2 := GVL_FiveX.bSpindleSealAir;
+		GVL_IO.A1_4_3 := GVL_FiveX.bSpindleWzClamp;
+		GVL_IO.A1_4_4 := GVL_FiveX.bSpindleCleaningJet;
+		GVL_IO.A1_4_5 := GVL_FiveX.bSpindleColdAir;
+		GVL_IO.A1_4_6 := GVL_FiveX.bClampWorkpiece;
+		GVL_IO.A1_4_7 := NOT(GVL_FiveX.bClampWorkpiece);
+
+		(* A1.5 EL3164 anal. Input *)
+		GVL_FiveX.currentPressure := (INT_TO_REAL(GVL_IO.A1_5_1)-3150)/1450;
+		
+		(* A1.6 EL3164 anal. Output *)
+		GVL_IO.A1_6_1				:= REAL_TO_INT(GVL_FiveX.desiredPressure*3700);
+		
+		(* Axis Position *)
+		GVL_IO.axisPosition[0].name := 'X';
+		GVL_IO.axisPosition[0].position := GVL_Axes.positionfeedbackvalue_x;
+		GVL_IO.axisPosition[1].name := 'Y';
+		GVL_IO.axisPosition[1].position := GVL_Axes.positionfeedbackvalue_y;
+		GVL_IO.axisPosition[2].name := 'Z';
+		GVL_IO.axisPosition[2].position := GVL_Axes.positionfeedbackvalue_z;
+		GVL_IO.axisPosition[3].name := 'B';
+		GVL_IO.axisPosition[3].position := GVL_Axes.positionfeedbackvalue_b;
+		GVL_IO.axisPosition[4].name := 'C';
+		GVL_IO.axisPosition[4].position := GVL_Axes.positionfeedbackvalue_c;
+		GVL_IO.spindleSpeed := GVL_Axes.velocityfeedbackvalue_s;]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_IO">
+      <LineId Id="440" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="340" Count="1" />
+      <LineId Id="267" Count="0" />
+      <LineId Id="343" Count="1" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="392" Count="0" />
+      <LineId Id="396" Count="2" />
+      <LineId Id="395" Count="0" />
+      <LineId Id="381" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="377" Count="0" />
+      <LineId Id="241" Count="0" />
+      <LineId Id="378" Count="1" />
+      <LineId Id="387" Count="0" />
+      <LineId Id="401" Count="0" />
+      <LineId Id="403" Count="0" />
+      <LineId Id="402" Count="0" />
+      <LineId Id="386" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="348" Count="0" />
+      <LineId Id="410" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="413" Count="0" />
+      <LineId Id="418" Count="0" />
+      <LineId Id="462" Count="0" />
+      <LineId Id="417" Count="0" />
+      <LineId Id="411" Count="0" />
+      <LineId Id="416" Count="0" />
+      <LineId Id="412" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="322" Count="0" />
+      <LineId Id="349" Count="0" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="326" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="274" Count="0" />
+      <LineId Id="278" Count="0" />
+      <LineId Id="281" Count="1" />
+      <LineId Id="285" Count="0" />
+      <LineId Id="287" Count="2" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="290" Count="0" />
+      <LineId Id="292" Count="2" />
+      <LineId Id="291" Count="0" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="297" Count="2" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="302" Count="2" />
+      <LineId Id="301" Count="0" />
+      <LineId Id="305" Count="0" />
+      <LineId Id="307" Count="2" />
+      <LineId Id="306" Count="0" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="312" Count="2" />
+      <LineId Id="311" Count="0" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="317" Count="2" />
+      <LineId Id="316" Count="0" />
+      <LineId Id="280" Count="0" />
+      <LineId Id="275" Count="0" />
+      <LineId Id="283" Count="1" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="380" Count="0" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="328" Count="3" />
+      <LineId Id="353" Count="0" />
+      <LineId Id="334" Count="0" />
+      <LineId Id="354" Count="0" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="355" Count="0" />
+      <LineId Id="264" Count="0" />
+      <LineId Id="357" Count="0" />
+      <LineId Id="419" Count="0" />
+      <LineId Id="421" Count="0" />
+      <LineId Id="444" Count="1" />
+      <LineId Id="447" Count="0" />
+      <LineId Id="446" Count="0" />
+      <LineId Id="451" Count="0" />
+      <LineId Id="449" Count="0" />
+      <LineId Id="453" Count="0" />
+      <LineId Id="452" Count="0" />
+      <LineId Id="455" Count="0" />
+      <LineId Id="454" Count="0" />
+      <LineId Id="456" Count="2" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

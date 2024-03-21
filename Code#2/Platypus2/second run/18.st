@@ -1,0 +1,35 @@
+// 97.92090272903442s
+// 2
+FUNCTION FC1003 : VOID
+VAR_INPUT
+    IN_R:REAL;
+    IN_MAX, IN_MIN:REAL;
+    OUT_MAX, OUT_MIN:REAL;
+END_VAR
+VAR_OUTPUT
+    OUT_R:REAL;
+    FEH:BOOL;
+END_VAR
+VAR_TEMP
+    DIFF1, DIFF2:REAL;
+END_VAR
+
+IF IN_R > IN_MAX THEN
+    OUT_R := -999.0;
+    FEH := TRUE;
+ELSE IF IN_R < IN_MIN THEN
+    OUT_R := -999.0;
+    FEH := TRUE;
+ELSE
+    DIFF1 := (OUT_MAX - OUT_MIN) / (IN_MAX - IN_MIN);
+    DIFF2 := (OUT_MAX - OUT_MIN) * IN_R + OUT_MIN;
+    IF DIFF2 > OUT_MAX THEN
+        OUT_R := -999.0;
+        FEH := TRUE;
+    ELSE IF DIFF2 < OUT_MIN THEN
+        OUT_R := -999.0;
+        FEH := TRUE;
+    ELSE
+        OUT_R := DIFF1 * IN_R + OUT_MIN;
+    END_IF;
+END_IF;

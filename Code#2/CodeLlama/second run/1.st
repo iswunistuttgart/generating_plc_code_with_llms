@@ -1,0 +1,36 @@
+// 48.12977194786072s
+// 2
+```
+PROGRAM Alarms
+VAR
+	xAllOn : BOOL;
+	xAllOff : BOOL;
+
+	xAlarm1 : BOOL;
+    xAlarm2 : BOOL;
+END_VAR
+
+FUNCTION Alarm1(INPUT : BOOL) : BOOL
+VAR
+	xAlarm1 : BOOL;
+END_VAR
+RETURN FALSE;
+END_FUNCTION
+
+FUNCTION Alarm2(INPUT : BOOL) : BOOL
+VAR
+	xAlarm2 : BOOL;
+END_VAR
+RETURN FALSE;
+END_FUNCTION
+
+PROGRAM_MAIN
+	IF xAllOn THEN
+		xAlarm1 := TRUE;
+		xAlarm2 := TRUE;
+	ELSIF xAllOff THEN
+		xAlarm1 := FALSE;
+		xAlarm2 := FALSE;
+	END_IF
+END_PROGRAM_MAIN
+```

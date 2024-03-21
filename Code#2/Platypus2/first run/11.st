@@ -1,0 +1,13 @@
+// 35.603342056274414s
+// 2
+PROGRAM sign;
+VAR_INPUT
+    x : REAL;
+END_VAR
+IF x > 0 THEN
+    RETURN(1);
+ELSE IF x < 0 THEN
+    RETURN(-1);
+ELSE
+    RETURN(0);
+ENDIF;

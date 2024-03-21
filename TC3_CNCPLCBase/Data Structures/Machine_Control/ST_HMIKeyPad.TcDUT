@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <DUT Name="ST_HMIKeyPad" Id="{f5cd4862-5646-4374-acfa-7bd8f93d09e3}">
+    <Declaration><![CDATA[(****************************************************************************************
+Author: 	ISW
+Date: 		2021-08-02
+Version:	1.0
+------------------------------------------------------------------------------------
+Description:
+
+This data structure is used to generate key pads in the CNC HMI (used in the GVL Global_HMI).
+
+****************************************************************************************)
+TYPE ST_HMIKeyPad :
+STRUCT	
+	q:			BOOL;
+	on:			BOOL;
+	on2:		BOOL;
+	hide:		BOOL;
+	disable:	BOOL;
+	color:		UDINT := 16#FFFFFFFF;
+	text:		STRING[40];
+	pic:		STRING[80];
+END_STRUCT
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

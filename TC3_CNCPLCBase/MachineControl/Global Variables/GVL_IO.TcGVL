@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <GVL Name="GVL_IO" Id="{33e7e163-0850-4884-8c1e-2313a1d4809b}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	
+	(* User Inputs *)
+	
+		(*Machine control*)
+		bManualPreop				: BOOL;
+		(* Door control*) //TODO
+		FrontDoorUp					: BOOL;
+		FrontDoorDown				: BOOL;
+		FrontDoorReset				: BOOL;
+		bStartReferenceDrive		: BOOL;
+		bForceStopRefereneDrive		: BOOL;
+		sFrontDoorReferenceDir		: STRING;
+		sFrontDoorPos				: STRING;
+		intFrontDoorPosition		: LREAL;
+	
+		
+	(* User Outputs *)
+		machineStates 				: ARRAY[0..3] OF ST_States;
+		axIsPosition 				: ARRAY[0..4] OF ST_AxisPosition;
+		spindleSpeed 				: DINT;
+		sSpindleOverride 			: STRING;
+		
+		
+	(* A1 EK1100 *)
+		(* A1.1 EL1008 dig. Input *)
+		A1_1_1	AT%I*	: BOOL;  // Türe WZW offen 
+		A1_1_2	AT%I*	: BOOL;  // Türe WZW geschlossen
+		A1_1_3	AT%I*	: BOOL;  // WZW oben
+		A1_1_4	AT%I*	: BOOL;  // WZW unten
+		A1_1_5	AT%I*	: BOOL;  // Referenz Werkzeugwechsler
+		A1_1_6	AT%I*	: BOOL;  // WZ in Ausgabe vorhanden
+		A1_1_7	AT%I*	: BOOL;  // Spindelstillstand 1
+		A1_1_8	AT%I*	: BOOL;  // Spindelstillstand 2
+			
+		(* A1.2 EL1008 dig. Input ???*)
+		A1_2_1	AT%I*	: BOOL;  // Schlüsselschalter
+		A1_2_2	AT%I*	: BOOL;  // Spindeltaster
+		A1_2_3	AT%I*	: BOOL;  // TBD
+		A1_2_4	AT%I*	: BOOL;  // Spindel Clamp open
+		A1_2_5	AT%I*	: BOOL;  // X Referenz
+		A1_2_6	AT%I*	: BOOL;  // Y Referenz
+		A1_2_7	AT%I*	: BOOL;  // Z Referenz
+		A1_2_8	AT%I*	: BOOL;  // Spindel WZ
+		
+		
+		(* A1.25 EL1104 dig. Input ???*)
+		A1_25_1	AT%I*	: BOOL;  // Schütze
+		A1_25_2	AT%I*	: BOOL;  // Not-Aus
+		A1_25_3	AT%I*	: BOOL;  // Endschalter Türe Oben
+		A1_25_4	AT%I*	: BOOL;  // Referenzschalter
+		
+			
+		(* A1.3 EL2008 dig. Output *)
+		A1_3_1	AT%Q*	: BOOL;  // Türe WZW öffnen/schließen
+		A1_3_2	AT%Q*	: BOOL;  // WZW aus/einfahren
+		A1_3_3	AT%Q*	: BOOL;  // Direction
+		A1_3_4	AT%Q*	: BOOL;  // PWM Stepper WZW
+		A1_3_5	AT%Q*	: BOOL;  // Lampe Rot
+		A1_3_6	AT%Q*	: BOOL;  // Lampe Grün
+		A1_3_7	AT%Q*	: BOOL;  // Lampe Blau
+		A1_3_8	AT%Q*	: BOOL;  // Lampe Signal
+			
+		(* A1.4 EL2008 dig. Output *)
+		A1_4_1	AT%Q*	: BOOL;  // Pneumatik an (Ventil unten mit 12mm Schlauch)
+		A1_4_2	AT%Q*	: BOOL;  // Sperrluft an (Ventil oben links nach manuellem Druckregler)
+		A1_4_3	AT%Q*	: BOOL;  // WZ-Spannung Spindel lösen (Ventil oben mitte links)
+		A1_4_4	AT%Q*	: BOOL;  // Kegelreinigung (Ventil oben mitte rechts)
+		A1_4_5	AT%Q*	: BOOL;  // Kaltluftdüse      
+		A1_4_6	AT%Q*	: BOOL;  // Aufspannung spannen (Ventil oben rechts mit 4mm Schlauch nach automatischem Druckregler)
+		A1_4_7	AT%Q*	: BOOL;  // Aufspannung lösen (Ventil oben rechts mit 4mm Schlauch nach automatischem Druckregler)
+		A1_4_8	AT%Q*	: BOOL;  // CURRENTLY UNUSED
+		
+		(* A1.5 EL3164  4-CH Analog Input 0...10V *)
+		A1_5_1 AT%I*	: INT;  // Druckregler Monitor
+		A1_5_2 AT%I*	: INT;  // CURRENTLY UNUSED
+		A1_5_3 AT%I*	: INT;  // CURRENTLY UNUSED
+		A1_5_4 AT%I*	: INT;  // CURRENTLY UNUSED
+		
+		(* A1.6 EL4104 4-CH Analog Output 0...10V *)
+		A1_6_1 AT%Q*	: INT;  // Druckregler Ausgang
+		A1_6_2 AT%Q*	: INT;  // CURRENTLY UNUSED
+		A1_6_3 AT%Q*	: INT;  // CURRENTLY UNUSED
+		A1_6_4 AT%Q*	: INT;  // CURRENTLY UNUSED
+		
+		(* A1.8 EL9011 Endkappe *)
+		
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="PRG_OPCUA" Id="{8cd61208-35dc-4222-9c0c-9e57a55915eb}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_OPCUA
+VAR
+	{attribute 'OPC.UA.DA' := '1'}
+	fb_pneumatics : fb_Pneumatics;
+	{attribute 'OPC.UA.DA' := '1'}
+	fb_door : fb_Door;
+	{attribute 'OPC.UA.DA' := '1'}
+	fb_machine : fb_Machine;
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GVL_OPCUA.axisPosition[0].name := 'X';
+GVL_OPCUA.axisPosition[0].position := GVL_Axes.positionfeedbackvalue_x;
+GVL_OPCUA.axisPosition[1].name := 'Y';
+GVL_OPCUA.axisPosition[1].position := GVL_Axes.positionfeedbackvalue_y;
+GVL_OPCUA.axisPosition[2].name := 'Z';
+GVL_OPCUA.axisPosition[2].position := GVL_Axes.positionfeedbackvalue_z;
+GVL_OPCUA.axisPosition[3].name := 'B';
+GVL_OPCUA.axisPosition[3].position := GVL_Axes.positionfeedbackvalue_b;
+GVL_OPCUA.axisPosition[4].name := 'C';
+GVL_OPCUA.axisPosition[4].position := GVL_Axes.positionfeedbackvalue_c;
+GVL_OPCUA.spindleSpeed := GVL_Axes.velocityfeedbackvalue_s;
+GVL_OPCUA.doorPosition := GVL_IO.intFrontDoorPosition;
+]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_OPCUA">
+      <LineId Id="75" Count="11" />
+      <LineId Id="99" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

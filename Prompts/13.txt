@@ -1,0 +1,17 @@
+Give me an IEC 61131-3 structured text program that implements following function: A specific number is to be selected from a list of 100 numbers. The list contains random numbers. If the number 10 is found, the search is aborted. However, it is possible that the number does not exist in the list. Use the REPEAT and EXIT statements for the solution. Pay attention to the two abort conditions.
+Following rules should be followed:
+- variables should be declared between VAR and END_VAR
+- when using control structures do not forget END_<controll structure>
+- switch cases should be avoided unless instructed in the task
+- use the right quotation marks for the string type
+- implementing a function should be avoided
+- only when implementing a function: the variables should be declared inside the function; the return value should be stored in a variable named after the function; RETURN should be used correctly, to return to the main method and not to return a value
+Only following variables should be used:
+VAR CONSTANT
+    MAXNUMBERS : UINT := 99;
+END_VAR
+
+VAR
+    aNumbers : ARRAY[0..MAXNUMBERS] OF INT;
+    nCnt : INT;
+END_VAR

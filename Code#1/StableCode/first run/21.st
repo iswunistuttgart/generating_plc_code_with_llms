@@ -1,0 +1,10 @@
+// 79.8008279800415s
+// 1
+IEC 61131-3 - Oil or Gas Burner
+BURNER
+    INPUT
+        IN		Signal that starts the burner only when the input OVER_TEMP is FALSE.
+        OVER_TEMP	Boiler thermostat protection, which gets TRUE, if the boiler temperature has reached the maximum temperature.
+        PRE_HEAT	Input signal that initiates the burner start only when the input OIL_TEMP is FALSE.
+    OUTPUT
+        STATUS	Output status indicates the current state of the module: 110 = Wait for Start signal ( Standby ); 111 = startup sequence is executed; 112 = burner runs on stage 1; 113 = burner runs at stage 2. A number of error conditions are provided at the output STATUS, if an error is present:1 = fuel oil warming has not responded within the PRE_HEAT_TIME; 2 = fame sensor is active during fuel oil warming (PRE_HEAT_TIME); 3 = fame sensor is active during the aeration period (PRE_VENTILATION_TIME); 4 = safety time ( Safety_Time) was passed without a fame; 5 = fame stops in operation; 9 = boiler overheating contact has tripped. Trace recording of a normal boot sequence: The signal IN starts the sequence with the output PRE_HEAT. After reaching the oil temperature (OIIL_TEMP = TRUE), the engine started and the PRE_VENTILATION_TIME (time from engine start until oil valve is open) awaited. After an adjustable time (PPR_IGNITION_TIME) before opening the oil valve, the ignition is turned on. The ignition is then on until the POST_IGNITION_TIME has expired. The operating time per stage is measured independently in seconds. The timing diagram refects the exact time line: t1 = pre-heating (PRE_HEAT_TIME); t2 = prepurge (PRE_VENT_Time); t3 = pre ignition time (PRE_IGNITE_TIME); t4 = safety time (SAFETY_TIME); t5 = post ignition time (POST_IGNITION_TIME); t6 = delay for stage 2 (STAGE2_DELAY)
