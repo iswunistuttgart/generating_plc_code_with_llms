@@ -1,7 +1,7 @@
 # generating_plc_code_with_llms
 ## Dependencies 
 To install all required dependencies for both the application and the evaluation, run
-> pip install -r ./04_Umsetzung/requirements.txt
+> pip install -r ./requirements.txt
 
 ## Run Application
 - Set your OpenAI-API-Key to the environment variable `OPENAI-KEY`
