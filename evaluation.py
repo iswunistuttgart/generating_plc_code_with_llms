@@ -25,7 +25,7 @@ class Evaluation:
     def generate_st_without_promptopti(self):
         for index, llm in enumerate(self.llms):
             for run in self.runs:
-                with open("04_Umsetzung/prompts.txt", "r") as file:
+                with open("prompts.txt", "r") as file:
                     lines = file.readlines() # all prompts in lines
                     # for each prompt
                     for i, prompt in enumerate(lines):
@@ -36,7 +36,7 @@ class Evaluation:
                         duration = end-start
 
                         # write the code and time in a file
-                        file_path = f"04_Umsetzung/Code#1/{self.models[index]}/{run}/{i+1}.st"
+                        file_path = f"Code#1/{self.models[index]}/{run}/{i+1}.st"
                         with open(file_path, "w") as structuredText:
                             structuredText.write(f"// {duration}s\n")
                             structuredText.write(response)            
@@ -45,7 +45,7 @@ class Evaluation:
     def generate_st_with_promptopti(self):
         for index ,llm in enumerate(self.llms):
             for run in self.runs:
-                dir_path = "./04_Umsetzung/Prompts"
+                dir_path = "./Prompts"
                 # go through each prompt file
                 for datei in os.listdir(dir_path):
                     file_path = os.path.join(dir_path,datei)
@@ -62,7 +62,7 @@ class Evaluation:
                         duration = end-start
 
                         # write the code and time into a file
-                        file_path = f"04_Umsetzung/Code#2/{self.models[index]}/{run}/{datei.replace('txt','st')}"
+                        file_path = f"Code#2/{self.models[index]}/{run}/{datei.replace('txt','st')}"
                         with open(file_path, "w") as structuredText:
                             structuredText.write(f"// {duration}s\n")
                             structuredText.write(response)
@@ -73,19 +73,19 @@ class Evaluation:
                 for run in self.runs:
                     results = []
                     # get prompt
-                    with open('04_Umsetzung/prompts.txt','r') as prompts:
+                    with open('prompts.txt','r') as prompts:
                         i = 1
                         sources = prompts.readlines()
                         for source in sources:
                         
                             # get generated structured text
-                            pred_path = f'04_Umsetzung/Code#{j}/{model}/{run}/{i}.st'
+                            pred_path = f'Code#{j}/{model}/{run}/{i}.st'
                             with open(pred_path, 'r') as file:
                                 p = file.read()
                             pred = [p]
 
                             # get reference structured text
-                            ref_path = f'04_Umsetzung/PLC_Code/{i}.st'
+                            ref_path = f'PLC_Code/{i}.st'
                             with open(ref_path, 'r') as file:
                                 r = file.read()
                             ref = [r]
@@ -97,7 +97,7 @@ class Evaluation:
                             i += 1
 
                     # write the scores into a file
-                    result_path = f'04_Umsetzung/Code#{j}/{model}/{run}/BertScore.csv'
+                    result_path = f'Code#{j}/{model}/{run}/BertScore.csv'
                     with open(result_path, 'w') as file:
                         for k in range(len(results)):
                             value = str(results[k].item())
@@ -123,9 +123,9 @@ class Evaluation:
         # calculate the median F3-score from the three runs and write them into a seperate file
         for j in range(1,3):
             for llm in ["ChatGPT_4", "ChatGPT_3.5", "Bard", "CodeLlama", "Platypus2", "StableCode"]:
-                df1 = pd.read_csv(f'04_Umsetzung/Code#{j}/{llm}/first run/BertScore.csv', header=None,names=columns)
-                df2 = pd.read_csv(f'04_Umsetzung/Code#{j}/{llm}/second run/BertScore.csv', header=None,names=columns)
-                df3 = pd.read_csv(f'04_Umsetzung/Code#{j}/{llm}/third run/BertScore.csv', header=None,names=columns)
+                df1 = pd.read_csv(f'Code#{j}/{llm}/first run/BertScore.csv', header=None,names=columns)
+                df2 = pd.read_csv(f'Code#{j}/{llm}/second run/BertScore.csv', header=None,names=columns)
+                df3 = pd.read_csv(f'Code#{j}/{llm}/third run/BertScore.csv', header=None,names=columns)
                 all_dfs = [df1, df2, df3]
                 
                 median_f3_values = pd.concat([df['f3'] for df in all_dfs], axis=1).median(axis=1)
@@ -140,8 +140,8 @@ class Evaluation:
                         
                 average = new_df.mean()
                 new_df.loc['average'] = average
-                # new_df.to_csv(f'04_Umsetzung/Code#{j}/{llm}/BertScore.csv', index=False,header=False)
-                new_df.to_csv(f'04_Umsetzung/Code#{j}/{llm}/BertScore.csv')
+                # new_df.to_csv(f'Code#{j}/{llm}/BertScore.csv', index=False,header=False)
+                new_df.to_csv(f'Code#{j}/{llm}/BertScore.csv')
     
 
 if __name__ == '__main__':
